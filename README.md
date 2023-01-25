@@ -2,9 +2,10 @@
 
 Project voor het vak Webdevelopment
 Door:
-Lucas Clavel
 Burton Braam
 Christiaan de Haan
+Met ondersteuning van:
+Lucas Clavel
 Bart de Jong
 
 Extra npm functions (run npm update in the terminal to install or update all packages):
