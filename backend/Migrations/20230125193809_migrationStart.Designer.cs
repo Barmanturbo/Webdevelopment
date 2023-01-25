@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -11,38 +10,32 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20230122154122_0")]
-    partial class _0
+    [Migration("20230125193809_migrationStart")]
+    partial class migrationStart
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.2")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
 
             modelBuilder.Entity("Band", b =>
                 {
                     b.Property<int>("IdBand")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdBand"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Afbeelding")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Naam")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Omschrijving")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("IdBand");
 
@@ -53,30 +46,28 @@ namespace backend.Migrations
                 {
                     b.Property<int>("UserID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Naam")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Wachtwoord")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("UserID");
 
@@ -116,14 +107,23 @@ namespace backend.Migrations
             modelBuilder.Entity("Huren", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("Datum")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTime?>("Datum")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Naam")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("RuimteNr")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("VerhuurdeId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("Zaalnr")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -133,11 +133,11 @@ namespace backend.Migrations
             modelBuilder.Entity("Leden", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("BandId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -148,16 +148,14 @@ namespace backend.Migrations
                 {
                     b.Property<int>("RuimteNr")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RuimteNr"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Capaciteit")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Naam")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("RuimteNr");
 
@@ -230,31 +228,29 @@ namespace backend.Migrations
                 {
                     b.Property<int>("Shownr")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Shownr"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Afbeelding")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("BeginTijd")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("EindTijd")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Genre")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Leeftijdsgroep")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Naam")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("zaal")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Shownr");
 
@@ -265,8 +261,8 @@ namespace backend.Migrations
                         {
                             Shownr = 1,
                             Afbeelding = "",
-                            BeginTijd = new DateTime(2023, 1, 22, 16, 41, 22, 822, DateTimeKind.Local).AddTicks(222),
-                            EindTijd = new DateTime(2023, 1, 22, 16, 41, 22, 822, DateTimeKind.Local).AddTicks(257),
+                            BeginTijd = new DateTime(2023, 1, 25, 20, 38, 8, 585, DateTimeKind.Local).AddTicks(8545),
+                            EindTijd = new DateTime(2023, 1, 25, 20, 38, 8, 585, DateTimeKind.Local).AddTicks(8599),
                             Genre = "Horor",
                             Leeftijdsgroep = "18",
                             Naam = "Show 1",
@@ -276,8 +272,8 @@ namespace backend.Migrations
                         {
                             Shownr = 2,
                             Afbeelding = "",
-                            BeginTijd = new DateTime(2023, 1, 22, 16, 41, 22, 822, DateTimeKind.Local).AddTicks(260),
-                            EindTijd = new DateTime(2023, 1, 22, 16, 41, 22, 822, DateTimeKind.Local).AddTicks(261),
+                            BeginTijd = new DateTime(2023, 1, 25, 20, 38, 8, 585, DateTimeKind.Local).AddTicks(8605),
+                            EindTijd = new DateTime(2023, 1, 25, 20, 38, 8, 585, DateTimeKind.Local).AddTicks(8607),
                             Genre = "Horor",
                             Leeftijdsgroep = "18",
                             Naam = "Show 2",
@@ -287,8 +283,8 @@ namespace backend.Migrations
                         {
                             Shownr = 3,
                             Afbeelding = "",
-                            BeginTijd = new DateTime(2023, 1, 22, 16, 41, 22, 822, DateTimeKind.Local).AddTicks(263),
-                            EindTijd = new DateTime(2023, 1, 22, 16, 41, 22, 822, DateTimeKind.Local).AddTicks(265),
+                            BeginTijd = new DateTime(2023, 1, 25, 20, 38, 8, 585, DateTimeKind.Local).AddTicks(8612),
+                            EindTijd = new DateTime(2023, 1, 25, 20, 38, 8, 585, DateTimeKind.Local).AddTicks(8615),
                             Genre = "Horor",
                             Leeftijdsgroep = "18",
                             Naam = "Show 3",
@@ -300,18 +296,16 @@ namespace backend.Migrations
                 {
                     b.Property<int>("rijid")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("rijid"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Aantal_stoelen")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Rangnummer")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Zaalnr")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("rijid");
 
@@ -394,20 +388,16 @@ namespace backend.Migrations
                 {
                     b.Property<int>("TicketID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TicketID"));
-
-                    b.Property<int?>("GebruikerUserID")
-                        .HasColumnType("int");
+                    b.Property<int>("Shownr")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("stoelNr")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("TicketID");
-
-                    b.HasIndex("GebruikerUserID");
 
                     b.ToTable("tickets");
                 });
@@ -416,16 +406,14 @@ namespace backend.Migrations
                 {
                     b.Property<int>("Zaalnr")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Zaalnr"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Aantal_stoelen")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Naam")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Zaalnr");
 
@@ -463,18 +451,13 @@ namespace backend.Migrations
                     b.HasBaseType("Gebruiker");
 
                     b.Property<string>("LedenId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("Shownr")
-                        .HasColumnType("int");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("artiest_naam")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasIndex("LedenId");
-
-                    b.HasIndex("Shownr");
 
                     b.HasDiscriminator().HasValue("Artiest");
 
@@ -531,7 +514,7 @@ namespace backend.Migrations
                     b.HasBaseType("Gebruiker");
 
                     b.Property<int>("TotaleDonatie")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasDiscriminator().HasValue("Donateur");
 
@@ -547,37 +530,16 @@ namespace backend.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Ticket", b =>
-                {
-                    b.HasOne("Gebruiker", null)
-                        .WithMany("tickets")
-                        .HasForeignKey("GebruikerUserID");
-                });
-
             modelBuilder.Entity("Artiest", b =>
                 {
                     b.HasOne("Leden", null)
                         .WithMany("artiesten")
                         .HasForeignKey("LedenId");
-
-                    b.HasOne("Show", null)
-                        .WithMany("Artiesten")
-                        .HasForeignKey("Shownr");
-                });
-
-            modelBuilder.Entity("Gebruiker", b =>
-                {
-                    b.Navigation("tickets");
                 });
 
             modelBuilder.Entity("Leden", b =>
                 {
                     b.Navigation("artiesten");
-                });
-
-            modelBuilder.Entity("Show", b =>
-                {
-                    b.Navigation("Artiesten");
                 });
 #pragma warning restore 612, 618
         }

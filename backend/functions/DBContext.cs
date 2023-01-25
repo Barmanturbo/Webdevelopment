@@ -16,7 +16,7 @@ public class DBContext : DbContext
     public DbSet<Stoelrij> stoelrijen {get; set;}
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder) {
-    builder.UseSqlServer("Server=tcp:laakentertainment.database.windows.net,1433;Initial Catalog=LaakEntertainment;Persist Security Info=False;User ID=AdminLaak;Password=LaakEntertainment1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=2;");
+    builder.UseSqlite($"Data Source=database.db");
     builder.EnableSensitiveDataLogging();
     }
     protected override void OnModelCreating(ModelBuilder builder)
