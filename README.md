@@ -4,6 +4,7 @@ Project voor het vak Webdevelopment
 Door:
 Burton Braam
 Christiaan de Haan
+
 Met ondersteuning van:
 Lucas Clavel
 Bart de Jong
