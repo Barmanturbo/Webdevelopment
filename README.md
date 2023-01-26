@@ -29,4 +29,8 @@ npm install --save react-dropdown-select
 React cookies, (https://www.npmjs.com/package/universal-cookie)
 npm i universal-cookie
 
+Cypress
+npm install cypress --save-dev
+Opening cypress: npx cypress open
+
 Run de backend en frontend danke.
