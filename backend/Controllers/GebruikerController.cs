@@ -7,88 +7,108 @@ namespace backend.Controllers;
 [ApiController]
 public class GebruikerController : ControllerBase
 {
-    public static DBContext _context = new DBContext();
+    //public static DBContext _context = new DBContext();
 
     // GET: api/Gebruiker
-    [HttpGet] 
+    [HttpGet]
     public async Task<ActionResult<IEnumerable<Gebruiker>>> getGebruiker()
     {
-        if (_context.shows == null)
-          {
-              return NotFound();
-          }
+        using (var _context = new DBContext())
+        {
+            
+            if (_context.shows == null)
+            {
+                return NotFound();
+            }
             return await _context.gebruikers.ToListAsync();
+        }
     }
 
     // GET: api/Gebruiker/5
-    [HttpGet("{id}")] 
+    [HttpGet("{id}")]
     public async Task<ActionResult<Gebruiker>> GetGebruikerUsingId(int id)
     {
-        if (_context.gebruikers == null)
+        using (var _context = new DBContext())
         {
-            return NotFound();
-        }
-        var gebruiker = await _context.gebruikers.FindAsync(id);
+            if (_context.gebruikers == null)
+            {
+                return NotFound();
+            }
+            var gebruiker = await _context.gebruikers.FindAsync(id);
 
-        if (gebruiker == null)
-        {
-            return NotFound();
+            if (gebruiker == null)
+            {
+                return NotFound();
+            }
+            return gebruiker;
         }
-        return gebruiker;
     }
-    
+
     // POST: api/Gebruiker
-    [HttpPost] 
+    [HttpPost]
     public async Task<ActionResult<Gebruiker>> PostGebruiker(Gebruiker gebruiker)
     {
-        if (_context.gebruikers == null)
+        using (var _context = new DBContext())
         {
-            return Problem("Entity set 'DBcontext.gebruikers'  is null.");
-        }
-        _context.gebruikers.Add(gebruiker);
-        await _context.SaveChangesAsync();
+            if (_context.gebruikers == null)
+            {
+                return Problem("Entity set 'DBcontext.gebruikers'  is null.");
+            }
+            _context.gebruikers.Add(gebruiker);
+            await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetGebruiker", new { id = gebruiker.UserID }, gebruiker);
+            return CreatedAtAction("GetGebruiker", new { id = gebruiker.UserID }, gebruiker);
+        }
     }
 
     //PUT api/Gebruiker/5
-    [HttpPut ("{id}")]
+    [HttpPut("{id}")]
     public async Task<IActionResult> PutGebruiker(int id, Gebruiker gebruiker)
     {
-        if (_context.gebruikers == null)
+        using (var _context = new DBContext())
         {
-            return Problem("Entity set 'DBcontext.gebruikers'  is null.");
+            if (_context.gebruikers == null)
+            {
+                return Problem("Entity set 'DBcontext.gebruikers'  is null.");
+            }
+            if (id != gebruiker.UserID)
+            {
+                return BadRequest();
+            }
+            _context.Entry(gebruiker).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
-        if (id != gebruiker.UserID)
+    }
+
+    private bool GebruikerExists(int id)
+    {
+        using (var _context = new DBContext())
         {
-            return BadRequest();
+            return _context.gebruikers.Any(e => e.UserID == id);
         }
-        _context.Entry(gebruiker).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
-
-        return NoContent();
-    } 
-
-    private bool GebruikerExists(int id){
-        return _context.gebruikers.Any(e => e.UserID == id);
     }
 
     // DELETE: api/Gebruiker/5
-    [HttpDelete("{id}")] 
+    [HttpDelete("{id}")]
     public async Task<ActionResult<Show>> DeleteGebruiker(int id)
     {
-        if (_context.gebruikers == null)
+        using (var _context = new DBContext())
         {
-            return Problem("Entity set 'DBcontext.gebruikers'  is null.");
-        }
-        var gebruiker = await _context.gebruikers.FindAsync(id);
-        if (gebruiker == null)
-        {
-            return NotFound();
-        }
-        _context.gebruikers.Remove(gebruiker);
-        await _context.SaveChangesAsync();
+            if (_context.gebruikers == null)
+            {
+                return Problem("Entity set 'DBcontext.gebruikers'  is null.");
+            }
+            var gebruiker = await _context.gebruikers.FindAsync(id);
+            if (gebruiker == null)
+            {
+                return NotFound();
+            }
+            _context.gebruikers.Remove(gebruiker);
+            await _context.SaveChangesAsync();
 
-        return NoContent();
+            return NoContent();
+        }
     }
 }
