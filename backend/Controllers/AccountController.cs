@@ -11,6 +11,27 @@ namespace backend.Controllers;
 [ApiController]
 public class AccountController : ControllerBase
 {
+    [Route("api/AccountController/{username}/{pass}")]
+    public IEnumerable<Gebruiker> CheckLogin(string username, string pass)
+    {
+        using (var _context = new DBContext())
+        {
+            if (_context.gebruikers == null)
+            {
+                return (IEnumerable<Gebruiker>)NotFound();
+            }
+            else
+            {
+                var gebruiker = _context.gebruikers
+                    .Where((g) => g.Username == username && g.Wachtwoord == pass)
+                    .Select((g) => new {g.Username, g.Wachtwoord, g.rol})
+                    .ToList();
+                if(gebruiker.Count()==1){
+                    return (IEnumerable<Gebruiker>)gebruiker;
+                }else {return (IEnumerable<Gebruiker>)NotFound();}
+            }
+        }
+    }
     // private readonly UserManager<IdentityUser> _userManager;
     // private readonly SignInManager<IdentityUser> _signInManager;
     // private readonly RoleManager<IdentityRole> _roleManager;

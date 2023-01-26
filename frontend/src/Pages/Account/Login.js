@@ -4,8 +4,9 @@ import Alinea from '../Shared/Alinea';
 import { useRef, useState, useEffect, useContext} from "react";
 import AuthContext from "../../context/AuthProvider";
 import axios from "../../api/axios";
+import fetchUser from "../../api/UserFetching";
 
-const LOGIN_URL = "/auth";
+const LOGIN_URL = "/authhttps://localhost:7214/api/AccountController/";
 
 const Login = (props) => {
     const { setAuth } = useContext(AuthContext);
@@ -39,7 +40,7 @@ const Login = (props) => {
 
         try{
             const response = await axios.post(LOGIN_URL,
-                JSON.stringify({user: gebruikersnaam,pwd:wachtwoord}),
+                JSON.stringify({username: gebruikersnaam,pass:wachtwoord}),
                 {
                     headers: {'Content-Type': 'application/json'},
                     withCredentials: true
