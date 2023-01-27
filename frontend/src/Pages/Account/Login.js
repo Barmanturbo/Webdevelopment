@@ -36,7 +36,6 @@ const Login = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log (placeholder);
-        const [posts, setPosts] = useState([])
 
         try{
             const response = await axios.post(
