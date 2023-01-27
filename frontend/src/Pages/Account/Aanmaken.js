@@ -199,7 +199,8 @@ const Aanmaken = () => {
 
                             <button className="btn" disabled={!validName || !validEmail  || !validPwd || !validMatch ? true : false}> Registreer </button>
                         </form>
-                    </section>
+                        <p id='LinkNaarLogin'><br/>Heeft u al een account? <br/><a href='/Login'>Log hier in</a></p>
+                        </section>
                 )
             }
         </>

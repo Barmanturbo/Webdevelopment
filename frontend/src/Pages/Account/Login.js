@@ -5,7 +5,7 @@ import { useRef, useState, useEffect, useContext} from "react";
 import AuthContext from "../../context/AuthProvider";
 import axios from "../../api/axios";
 
-const LOGIN_URL = "/auth";
+const LOGIN_URL = "/api/Gebruiker//";
 
 const Login = (props) => {
     const { setAuth } = useContext(AuthContext);
@@ -38,17 +38,16 @@ const Login = (props) => {
         console.log (placeholder);
 
         try{
-            const response = await axios.post(LOGIN_URL,
-                JSON.stringify({user: gebruikersnaam,pwd:wachtwoord}),
-                {
-                    headers: {'Content-Type': 'application/json'},
-                    withCredentials: true
-                }
+            const response = await axios.post(
+                LOGIN_URL,
+                JSON.stringify({username: gebruikersnaam, pass:wachtwoord}),
+                {headers:{'Content-Type': 'application/json'},withCredentials:true}
             );
+
             console.log(JSON.stringify(response?.data));
-            const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.roles;
-            setAuth({gebruikersnaam, wachtwoord, roles, accessToken});
+            //const accessToken = response?.data?.accessToken;
+            const roles = response?.data?.rol;
+            setAuth({gebruikersnaam, wachtwoord, roles/*, accessToken*/});
             setGebruikersnaam("");
             setWachtwoord("");
             setSuccess(true);   
@@ -107,6 +106,7 @@ const Login = (props) => {
                             />
                             <button className="btn" onClick={handleSubmit} type="submit">Log in</button>
                         </form>
+                        <p id='LinkNaarAanmaken'><br/>Heeft u nog geen account? <br/><a href='/Aanmaken'>Maak hier uw account aan.</a></p>
                     </section>
                 </>
             )} 
