@@ -1,5 +1,9 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace backend.Controllers;
 
@@ -8,6 +12,11 @@ namespace backend.Controllers;
 public class GebruikerController : ControllerBase
 {
     //public static DBContext _context = new DBContext();
+    private readonly IConfiguration _config;
+    public GebruikerController(IConfiguration config)
+    {
+        _config = config;
+    }
 
     // GET: api/Gebruiker
     [HttpGet]
@@ -15,13 +24,12 @@ public class GebruikerController : ControllerBase
     {
         using (var _context = new DBContext())
         {
-            
-            if (_context.shows == null)
+            if (_context.gebruikers == null)
             {
                 return NotFound();
             }
             return await _context.gebruikers.ToListAsync();
-        }
+        } 
     }
 
     // GET: api/Gebruiker/5
@@ -40,7 +48,7 @@ public class GebruikerController : ControllerBase
             {
                 return NotFound();
             }
-            return gebruiker;
+            return Ok(gebruiker); 
         }
     }
 
@@ -60,6 +68,39 @@ public class GebruikerController : ControllerBase
             return CreatedAtAction("GetGebruiker", new { id = gebruiker.UserID }, gebruiker);
         }
     }
+    // POST: api/Gebruiker/login
+    [HttpPost("login")]
+    public async Task<ActionResult<string>> PostLoginGebruiker(Gebruiker gebruiker)
+    {
+        using (var _context = new DBContext())
+        {
+
+            if (_context.gebruikers == null /* ||gebruiker.Email == cookieGebruiker.Username*/)
+            {
+                //return uw bent al ingelogt. 
+                return Problem("Entity set 'DBcontext.gebruikers'  is null.");
+            }
+
+            //if (!VerifyPasswordHash(...)){
+                //return BadRequest("Wrong password");
+            //}
+            Gebruiker getUser = await getGebruikerUsingLogin(gebruiker.Username); 
+            if (getUser == null)
+            {
+                return NotFound();
+            }
+            if (getUser.Username == gebruiker.Username)
+            {
+                //var token = CreateToken(gebruiker);
+                return Ok(getUser);
+            }
+            else
+            {
+                return NotFound();
+            }
+            
+        }
+    }    
 
     //PUT api/Gebruiker/5
     [HttpPut("{id}")]
@@ -111,4 +152,58 @@ public class GebruikerController : ControllerBase
             return NoContent();
         }
     }
+
+    private string CreateToken(Gebruiker gebruiker)
+    {
+        List<Claim> claims = new List<Claim>
+        { 
+            new Claim (ClaimTypes.Name, gebruiker.Username)
+        };
+
+        var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_config.GetSection("AppSettings: Token").Value));
+        var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+        var token = new JwtSecurityToken(
+            claims: claims,
+            expires: DateTime.Now.AddHours(6),
+            signingCredentials: cred
+            );
+        var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+        return jwt;
+    }
+    private void PasswordHash(Gebruiker gebruiker)
+    {
+            using (var hash = new HMACSHA512())
+            {
+                //gebruiker.passwordHash = hash.Key;
+                //gebruiker.saltHash = hmac.Computehash(.....);
+            }
+    }
+
+    private async Task<Gebruiker> getGebruikerUsingLogin(string username)
+    {
+        using (var _context = new DBContext())
+        {
+            if (_context.gebruikers == null)
+            {
+                return null;
+            }
+            var gebruiker = await _context.gebruikers
+                    .Where(user => user.Username == username)
+                    .FirstOrDefaultAsync();
+            return gebruiker; 
+        }
+    }
+
+
+    //private bool VerifyPasswordHash(string loginPassword, Gebruiker gebruiker)
+    //{
+   //     using (var hash = new HMACSHA512(gebruiker./*passwordHash*/))
+   //        {
+   //           var computeHash = hash.ComputeHash(System.Text.Encoding.UTF8.GetBytes(loginPassword));
+   //           return computeHash.SequenceEqual(/*gebruiker.passwordHash*/);
+
+
+   //        }
+   //}
+
 }
