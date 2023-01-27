@@ -4,9 +4,8 @@ import Alinea from '../Shared/Alinea';
 import { useRef, useState, useEffect, useContext} from "react";
 import AuthContext from "../../context/AuthProvider";
 import axios from "../../api/axios";
-//import fetchUser from "../../api/UserFetching";
 
-const LOGIN_URL = "/authhttps://localhost:7214/api/AccountController/";
+const LOGIN_URL = "/api/Gebruiker//";
 
 const Login = (props) => {
     const { setAuth } = useContext(AuthContext);
@@ -37,19 +36,19 @@ const Login = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log (placeholder);
+        const [posts, setPosts] = useState([])
 
         try{
-            const response = await axios.post(LOGIN_URL,
-                JSON.stringify({username: gebruikersnaam,pass:wachtwoord}),
-                {
-                    headers: {'Content-Type': 'application/json'},
-                    withCredentials: true
-                }
+            const response = await axios.post(
+                LOGIN_URL,
+                JSON.stringify({username: gebruikersnaam, pass:wachtwoord}),
+                {headers:{'Content-Type': 'application/json'},withCredentials:true}
             );
+
             console.log(JSON.stringify(response?.data));
-            const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.roles;
-            setAuth({gebruikersnaam, wachtwoord, roles, accessToken});
+            //const accessToken = response?.data?.accessToken;
+            const roles = response?.data?.rol;
+            setAuth({gebruikersnaam, wachtwoord, roles/*, accessToken*/});
             setGebruikersnaam("");
             setWachtwoord("");
             setSuccess(true);   
