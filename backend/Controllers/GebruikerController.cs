@@ -81,16 +81,16 @@ public class GebruikerController : ControllerBase
                 return Problem("Entity set 'DBcontext.gebruikers'  is null.");
             }
 
-            //if (!VerifyPasswordHash(...)){
-                //return BadRequest("Wrong password");
-            //}
             Gebruiker getUser = await getGebruikerUsingLogin(gebruiker.Username); 
+
             if (getUser == null)
             {
                 return NotFound();
             }
-            if (getUser.Username == gebruiker.Username)
+            if (getUser.Username == gebruiker.Username && getUser.Wachtwoord == gebruiker.Wachtwoord)
             {
+                //if (!VerifyPasswordHash(...)){
+                //return BadRequest("Wrong password");}
                 //var token = CreateToken(gebruiker);
                 return Ok(getUser);
             }
