@@ -4,7 +4,7 @@ import Alinea from '../Shared/Alinea';
 import { useRef, useState, useEffect, useContext} from "react";
 import AuthContext from "../../context/AuthProvider";
 import axios from "../../api/axios";
-import fetchUser from "../../api/UserFetching";
+//import fetchUser from "../../api/UserFetching";
 
 const LOGIN_URL = "/authhttps://localhost:7214/api/AccountController/";
 
@@ -108,6 +108,7 @@ const Login = (props) => {
                             />
                             <button className="btn" onClick={handleSubmit} type="submit">Log in</button>
                         </form>
+                        <p id='LinkNaarAanmaken'><br/>Heeft u nog geen account? <br/><a href='/Aanmaken'>Maak hier uw account aan.</a></p>
                     </section>
                 </>
             )} 
