@@ -15,6 +15,10 @@ public class Gebruiker //: IdentityUser
 
     [Required]
     public string Wachtwoord {set; get;} = string.Empty;
+    //Password hash? Security? 
+    //public byte[] PasswordHash { get; set; }
+    //public byte[] SaltHash { get; set; }
+
 
     [Required]
     public string Username {set;get;} = string.Empty;
