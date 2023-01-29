@@ -22,20 +22,20 @@ public class DBContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<Gebruiker>().HasData(
-            new Gebruiker(){ Email = "test2@email.com",Username="Jan2",Naam = "Jan2", Wachtwoord = "Test2", UserID = 2, rol = new Role(){roleid=1}},
-            new Gebruiker(){ Email = "test3@email.com",Username="Jan3",Naam = "Jan3", Wachtwoord = "Test3", UserID = 3, rol = new Role(){roleid=1}},
-            new Gebruiker(){ Email = "test4@email.com",Username="Jan4",Naam = "Jan4", Wachtwoord = "Test4", UserID = 4, rol = new Role(){roleid=1}}
+            new Gebruiker(){ Email = "test2@email.com",Username="Jan2",Naam = "Jan2", Wachtwoord = "Test2", UserID = 2},
+            new Gebruiker(){ Email = "test3@email.com",Username="Jan3",Naam = "Jan3", Wachtwoord = "Test3", UserID = 3},
+            new Gebruiker(){ Email = "test4@email.com",Username="Jan4",Naam = "Jan4", Wachtwoord = "Test4", UserID = 4}
         );
         builder.Entity<Artiest>().HasData(
-            new Artiest(){Email = "artiestmail1@email.com", Username="Artiest1", Naam = "Artiest1", Wachtwoord = "Test1", artiest_naam = "Artiest1", UserID = 5, rol = new Role(){roleid=2}},
-            new Artiest(){Email = "artiestmail2@email.com", Username="Artiest2", Naam = "Artiest2", Wachtwoord = "Test2", artiest_naam = "Artiest2", UserID = 6, rol = new Role(){roleid=2}},
-            new Artiest(){Email = "artiestmail3@email.com", Username="Artiest3", Naam = "Artiest3", Wachtwoord = "Test3", artiest_naam = "Artiest3", UserID = 7, rol = new Role(){roleid=2}},
-            new Artiest(){Email = "artiestmail4@email.com", Username="Artiest4", Naam = "Artiest4", Wachtwoord = "Test4", artiest_naam = "Artiest4", UserID = 8, rol = new Role(){roleid=2}},
-            new Artiest(){Email = "artiestmail5@email.com", Username="Artiest5", Naam = "Artiest5", Wachtwoord = "Test5", artiest_naam = "Artiest5", UserID = 9, rol = new Role(){roleid=2}}
+            new Artiest(){Email = "artiestmail1@email.com", Username="Artiest1", Naam = "Artiest1", Wachtwoord = "Test1", artiest_naam = "Artiest1", UserID = 5},
+            new Artiest(){Email = "artiestmail2@email.com", Username="Artiest2", Naam = "Artiest2", Wachtwoord = "Test2", artiest_naam = "Artiest2", UserID = 6},
+            new Artiest(){Email = "artiestmail3@email.com", Username="Artiest3", Naam = "Artiest3", Wachtwoord = "Test3", artiest_naam = "Artiest3", UserID = 7},
+            new Artiest(){Email = "artiestmail4@email.com", Username="Artiest4", Naam = "Artiest4", Wachtwoord = "Test4", artiest_naam = "Artiest4", UserID = 8},
+            new Artiest(){Email = "artiestmail5@email.com", Username="Artiest5", Naam = "Artiest5", Wachtwoord = "Test5", artiest_naam = "Artiest5", UserID = 9}
         );
 
         builder.Entity<Donateur>().HasData(
-            new Donateur(){Email = "test1@email.com",Username="Jan1",Naam = "Jan1", Wachtwoord = "Test1",TotaleDonatie = 1000, UserID = 1, rol = new Role(){roleid=3}}
+            new Donateur(){Email = "test1@email.com",Username="Jan1",Naam = "Jan1", Wachtwoord = "Test1",TotaleDonatie = 1000, UserID = 1}
         );
         builder.Entity<Stoelrij>().HasData(
             new Stoelrij(){Rangnummer=1,Aantal_stoelen=20,  rijid=11, Zaalnr=1},

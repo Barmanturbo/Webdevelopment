@@ -91,12 +91,13 @@ public class GebruikerController : ControllerBase
             {
                 //if (!VerifyPasswordHash(...)){
                 //return BadRequest("Wrong password");}
-                //var token = CreateToken(gebruiker);
-                return Ok(getUser);
+                var token = CreateToken(gebruiker); 
+                return Ok(token);
             }
             else
             {
                 return NotFound();
+                
             }
             
         }
@@ -159,8 +160,7 @@ public class GebruikerController : ControllerBase
         { 
             new Claim (ClaimTypes.Name, gebruiker.Username)
         };
-
-        var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_config.GetSection("AppSettings: Token").Value));
+        var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
         var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
         var token = new JwtSecurityToken(
             claims: claims,

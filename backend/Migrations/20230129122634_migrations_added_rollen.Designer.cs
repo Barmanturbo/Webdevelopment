@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace backend.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20230129122634_migrations_added_rollen")]
+    partial class migrationsaddedrollen
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.2");
@@ -36,7 +39,7 @@ namespace backend.Migrations
 
                     b.HasKey("IdBand");
 
-                    b.ToTable("bands", (string)null);
+                    b.ToTable("bands");
                 });
 
             modelBuilder.Entity("Gebruiker", b =>
@@ -74,7 +77,7 @@ namespace backend.Migrations
 
                     b.HasIndex("rolId");
 
-                    b.ToTable("gebruikers", (string)null);
+                    b.ToTable("gebruikers");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Gebruiker");
 
@@ -104,7 +107,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("reserveringen", (string)null);
+                    b.ToTable("reserveringen");
                 });
 
             modelBuilder.Entity("Leden", b =>
@@ -118,7 +121,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("leden", (string)null);
+                    b.ToTable("leden");
                 });
 
             modelBuilder.Entity("Role", b =>
@@ -140,7 +143,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role", (string)null);
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("Ruimte", b =>
@@ -158,7 +161,7 @@ namespace backend.Migrations
 
                     b.HasKey("RuimteNr");
 
-                    b.ToTable("ruimtes", (string)null);
+                    b.ToTable("ruimtes");
 
                     b.HasData(
                         new
@@ -253,7 +256,7 @@ namespace backend.Migrations
 
                     b.HasKey("Shownr");
 
-                    b.ToTable("shows", (string)null);
+                    b.ToTable("shows");
 
                     b.HasData(
                         new
@@ -308,66 +311,76 @@ namespace backend.Migrations
 
                     b.HasKey("rijid");
 
-                    b.ToTable("stoelrijen", (string)null);
+                    b.ToTable("stoelrijen");
 
                     b.HasData(
                         new
                         {
                             rijid = 11,
+                            Aantalstoelen = 20,
                             Rangnummer = 1,
                             Zaalnr = 1
                         },
                         new
                         {
                             rijid = 12,
+                            Aantalstoelen = 100,
                             Rangnummer = 2,
                             Zaalnr = 1
                         },
                         new
                         {
                             rijid = 13,
+                            Aantalstoelen = 120,
                             Rangnummer = 3,
                             Zaalnr = 1
                         },
                         new
                         {
                             rijid = 21,
+                            Aantalstoelen = 2,
                             Rangnummer = 1,
                             Zaalnr = 2
                         },
                         new
                         {
                             rijid = 22,
+                            Aantalstoelen = 160,
                             Rangnummer = 2,
                             Zaalnr = 2
                         },
                         new
                         {
                             rijid = 31,
+                            Aantalstoelen = 10,
                             Rangnummer = 1,
                             Zaalnr = 3
                         },
                         new
                         {
                             rijid = 32,
+                            Aantalstoelen = 80,
                             Rangnummer = 2,
                             Zaalnr = 3
                         },
                         new
                         {
                             rijid = 41,
+                            Aantalstoelen = 40,
                             Rangnummer = 1,
                             Zaalnr = 4
                         },
                         new
                         {
                             rijid = 42,
+                            Aantalstoelen = 200,
                             Rangnummer = 2,
                             Zaalnr = 4
                         },
                         new
                         {
                             rijid = 43,
+                            Aantalstoelen = 200,
                             Rangnummer = 3,
                             Zaalnr = 4
                         });
@@ -388,7 +401,7 @@ namespace backend.Migrations
 
                     b.HasKey("TicketID");
 
-                    b.ToTable("tickets", (string)null);
+                    b.ToTable("tickets");
                 });
 
             modelBuilder.Entity("Zaal", b =>
@@ -406,27 +419,31 @@ namespace backend.Migrations
 
                     b.HasKey("Zaalnr");
 
-                    b.ToTable("zalen", (string)null);
+                    b.ToTable("zalen");
 
                     b.HasData(
                         new
                         {
                             Zaalnr = 1,
+                            Aantalstoelen = 240,
                             Naam = "Zaal 1"
                         },
                         new
                         {
                             Zaalnr = 2,
+                            Aantalstoelen = 180,
                             Naam = "Zaal 2"
                         },
                         new
                         {
                             Zaalnr = 3,
+                            Aantalstoelen = 90,
                             Naam = "Zaal 3"
                         },
                         new
                         {
                             Zaalnr = 4,
+                            Aantalstoelen = 440,
                             Naam = "Zaal 4"
                         });
                 });
