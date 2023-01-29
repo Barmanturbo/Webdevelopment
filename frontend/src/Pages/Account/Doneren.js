@@ -1,6 +1,6 @@
 import React from "react";
 import Hero2 from "../Shared/Hero2";
-import FakePay from "../Winkelmand/FakePay";
+import ikDoneer from "./ikDoneer";
 
 const Account = () => {
     const [donatie, setDonatie]=useRef();
@@ -9,9 +9,10 @@ const Account = () => {
 
     const handleSubmit = async (e) => {
         console.log(donatie);
-        
+
     }
 
+    //https://ikdoneer.azurewebsites.net/Rollen
     return(
         <>
             <Hero2 tekst="Doneren"/>
@@ -48,7 +49,9 @@ const Account = () => {
                     </form>
                     <br/>
                     <p>{donatie} euro doneren? </p>
-                    <FakePay bedrag={donatie}/> 
+                    
+                    <ikDoneer bedrag={donatie}/>
+                    
                     <hr/>
                 </section>
             ):(
