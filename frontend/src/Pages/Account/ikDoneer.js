@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRef, useState, useEffect, useContext} from "react";
 import Alinea from '../Shared/Alinea';
 
 const ikDoneer = (props) => {
@@ -17,10 +18,10 @@ const ikDoneer = (props) => {
     }
     formBody = formBody.join("&");
 
-    const [html, setHTML] = UseState("");
+    const [html, setHTML] = useState("");
     let code = `${html}`;
 
-    UseEffect(() => {
+    useEffect(() => {
         fetch('https://ikdoneer.azurewebsites.net/', {
             method: 'POST',
             headers:{

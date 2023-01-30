@@ -1,5 +1,7 @@
 import React from "react";
 import Hero2 from "../Shared/Hero2";
+import { AuthProvider } from "../../context/AuthProvider";
+import Alinea from "../Shared/Alinea";
 import ikDoneer from "./ikDoneer";
 
 const Account = () => {
