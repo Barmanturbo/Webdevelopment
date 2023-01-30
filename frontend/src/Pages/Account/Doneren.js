@@ -2,7 +2,7 @@ import React from "react";
 import Hero2 from "../Shared/Hero2";
 import { AuthContext } from "../../context/AuthProvider";
 import Alinea from "../Shared/Alinea";
-import IkDoneer from "./IkDoneer";
+import {IkDoneer} from "./IkDoneer";
 import {useState, useEffect, useRef} from 'react';
 
 const Account = () => {
