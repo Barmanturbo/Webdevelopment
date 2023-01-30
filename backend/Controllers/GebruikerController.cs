@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -91,7 +92,7 @@ public class GebruikerController : ControllerBase
             {
                 //if (!VerifyPasswordHash(...)){
                 //return BadRequest("Wrong password");}
-                var token = CreateToken(gebruiker); 
+                var token = CreateToken(gebruiker,5); 
                 return Ok(token);
             }
             else
@@ -133,7 +134,7 @@ public class GebruikerController : ControllerBase
     }
 
     // DELETE: api/Gebruiker/5
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}"), Authorize(Roles = "admin")] //AllowAnonimous //Authenicate the web token. 
     public async Task<ActionResult<Show>> DeleteGebruiker(int id)
     {
         using (var _context = new DBContext())
@@ -154,11 +155,12 @@ public class GebruikerController : ControllerBase
         }
     }
 
-    private string CreateToken(Gebruiker gebruiker)
+    private string CreateToken(Gebruiker gebruiker, int roleid)
     {
         List<Claim> claims = new List<Claim>
         { 
-            new Claim (ClaimTypes.Name, gebruiker.Username)
+            new Claim (ClaimTypes.Name, gebruiker.Username),
+            new Claim(ClaimTypes.Role, roleid.ToString())
         };
         var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
         var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
