@@ -1,14 +1,11 @@
 import React from "react";
 import IkDoneer from "./ikDoneer";
 import Hero2 from "../Shared/Hero2";
-import { AuthContext } from "../../context/AuthProvider";
 import Alinea from "../Shared/Alinea";
-import {useState, useEffect, useRef} from 'react';
+import {useState, useRef} from 'react';
 
 const Account = () => {
     const [donatie, setDonatie]=useRef();
-    const errRef = useRef();
-    const [errMsg, setErrMsg] = useState("");
 
     const loggedIn = false;
 
@@ -40,7 +37,6 @@ const Account = () => {
             <hr/>
             <>{loggedIn ?(
                 <section className="contact">
-                    <p ref={errRef} className={errMsg?"errmsg":"offscreen"} aria-live="assertive">{errMsg}</p>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="DonatieHoeveelheid">Hoeveel geld wilt u doneren?</label>
                         <input
