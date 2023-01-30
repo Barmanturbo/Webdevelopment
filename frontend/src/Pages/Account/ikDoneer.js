@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useRef, useState, useEffect, useContext} from "react";
+import React, { useEffect} from 'react';
 import Alinea from '../Shared/Alinea';
 
 const ikDoneer = (props) => {
@@ -18,7 +17,7 @@ const ikDoneer = (props) => {
     }
     formBody = formBody.join("&");
 
-    const [html, setHTML] = useState("");
+    const [html, setHTML] = "";
     let code = `${html}`;
 
     useEffect(() => {

@@ -1,13 +1,16 @@
 import React from "react";
 import Hero2 from "../Shared/Hero2";
-import { AuthProvider } from "../../context/AuthProvider";
+import { AuthContext } from "../../context/AuthProvider";
 import Alinea from "../Shared/Alinea";
 import ikDoneer from "./ikDoneer";
+import {useState, useEffect, useRef} from 'react';
 
 const Account = () => {
     const [donatie, setDonatie]=useRef();
     const errRef = useRef();
     const [errMsg, setErrMsg] = useState("");
+
+    const loggedIn = false;
 
     const handleSubmit = async (e) => {
         console.log(donatie);
@@ -35,7 +38,7 @@ const Account = () => {
                 </ul>
             </p>
             <hr/>
-            <>{auth != null ?(
+            <>{loggedIn ?(
                 <section className="contact">
                     <p ref={errRef} className={errMsg?"errmsg":"offscreen"} aria-live="assertive">{errMsg}</p>
                     <form onSubmit={handleSubmit}>
