@@ -17,10 +17,10 @@ const ikDoneer = (props) => {
     }
     formBody = formBody.join("&");
 
-    const [html, setHTML] = useState("");
+    const [html, setHTML] = UseState("");
     let code = `${html}`;
 
-    useEffect(() => {
+    UseEffect(() => {
         fetch('https://ikdoneer.azurewebsites.net/', {
             method: 'POST',
             headers:{
