@@ -55,7 +55,7 @@ const Account = () => {
                     <br/>
                     <p>{donatie} euro doneren? </p>
                     
-                    <ikDoneer bedrag={donatie}/>
+                    <IkDoneer bedrag={donatie}/>
                     
                     <hr/>
                 </section>
