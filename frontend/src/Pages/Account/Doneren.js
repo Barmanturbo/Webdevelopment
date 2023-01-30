@@ -2,7 +2,7 @@ import React from "react";
 import IkDoneer from "./ikDoneer";
 import Hero2 from "../Shared/Hero2";
 import Alinea from "../Shared/Alinea";
-import {useState, useRef} from 'react';
+import {useRef} from 'react';
 
 const Account = () => {
     const [donatie, setDonatie]=useRef();
