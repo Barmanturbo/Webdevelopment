@@ -20,7 +20,7 @@ public class GebruikerController : ControllerBase
     }
 
     // GET: api/Gebruiker
-    [HttpGet]
+    [HttpGet, Authorize(Roles = "Admin")]
     public async Task<ActionResult<IEnumerable<Gebruiker>>> getGebruiker()
     {
         using (var _context = new DBContext())
@@ -92,7 +92,7 @@ public class GebruikerController : ControllerBase
             {
                 //if (!VerifyPasswordHash(...)){
                 //return BadRequest("Wrong password");}
-                var token = CreateToken(gebruiker,5); 
+                var token = CreateToken(gebruiker ,"admin"); 
                 return Ok(token);
             }
             else
@@ -155,12 +155,12 @@ public class GebruikerController : ControllerBase
         }
     }
 
-    private string CreateToken(Gebruiker gebruiker, int roleid)
+    private string CreateToken(Gebruiker gebruiker, string role)
     {
         List<Claim> claims = new List<Claim>
         { 
             new Claim (ClaimTypes.Name, gebruiker.Username),
-            new Claim(ClaimTypes.Role, roleid.ToString())
+            new Claim(ClaimTypes.Role, "Admin")
         };
         var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
         var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
