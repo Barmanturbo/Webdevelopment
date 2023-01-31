@@ -18,8 +18,10 @@ builder.Services.AddCors(options =>
       {
           // add the allowed origins
           policy.WithOrigins("http://localhost:3000");
-          policy.WithOrigins("https://salmon-smoke-00d5f3d03.2.azurestaticapps.net");
+          policy.WithOrigins("https://zealous-glacier-087855e03.2.azurestaticapps.net/");
           policy.AllowAnyHeader();
+          policy.AllowAnyHeader();
+          policy.AllowCredentials();
       });
 });
 
@@ -30,21 +32,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
-      ValidateIssuerSigningKey = true,
-      IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
-      ValidateIssuer = false,
-      ValidateAudience = false
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
+        ValidateIssuer = false,
+        ValidateAudience = false
 
     };
 
- }
+}
  );
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen(options => {
+builder.Services.AddSwaggerGen(options =>
+{
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {
         Description = "Standard Authorization header using the Bearer scheme (\"bearer {token}\")",
@@ -81,5 +84,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseCors(MyAllowSpecificOrigins);
 app.Run();

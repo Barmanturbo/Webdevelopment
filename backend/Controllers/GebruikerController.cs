@@ -10,7 +10,7 @@ namespace backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize (Roles = "Admin")]
+//[Authorize (Roles = "Admin")]
 public class GebruikerController : ControllerBase
 {
     //public static DBContext _context = new DBContext();
@@ -94,7 +94,8 @@ public class GebruikerController : ControllerBase
                 //if (!VerifyPasswordHash(...)){
                 //return BadRequest("Wrong password");}
                 var token = CreateToken(gebruiker ,"admin"); 
-                return Ok(token);
+                Response.Cookies.Append("jwt", token, new CookieOptions{HttpOnly = true});
+                return Ok();
             }
             else
             {
@@ -189,12 +190,24 @@ public class GebruikerController : ControllerBase
             return gebruiker; 
         }
     }
-    [HttpGet("autorize"), Authorize]
-    public async Task<ActionResult<string?>> GetUsername()
+    [HttpPost("logout")]
+    public async Task<ActionResult<string?>> Logout()
     {   
-        var role = User.FindFirstValue(ClaimTypes.Role);
-        var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var username = User?.Identity?.Name;
+        Response.Cookies.Delete("jwt");
+        return Ok();
+    }
+    
+    [HttpGet("autorize")]
+    public async Task<ActionResult<string?>> GetToken()
+    {   
+        var jwt = Request.Cookies["jwt"];
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
+        var token = tokenHandler.ValidateToken(jwt, new TokenValidationParameters{IssuerSigningKey = key}, out SecurityToken validatedToken);
+
+        var role = token.FindFirstValue(ClaimTypes.Role);
+        var id = token.FindFirstValue(ClaimTypes.NameIdentifier);
+        var username = token?.Identity?.Name;
         return Ok(new {username, role, id});
     }
 

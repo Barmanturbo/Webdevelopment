@@ -42,7 +42,7 @@ public class DBContext : DbContext
             new Stoelrij(){Rangnummer=2,Aantal_stoelen=100, rijid=12, Zaalnr=1},
             new Stoelrij(){Rangnummer=3,Aantal_stoelen=120, rijid=13, Zaalnr=1},
             new Stoelrij(){Rangnummer=1,Aantal_stoelen=2,   rijid=21, Zaalnr=2},
-            new Stoelrij(){Rangnummer=2,Aantal_stoelen=160, rijid=22,Zaalnr=2},
+            new Stoelrij(){Rangnummer=2,Aantal_stoelen=160, rijid=22, Zaalnr=2},
             new Stoelrij(){Rangnummer=1,Aantal_stoelen=10,  rijid=31, Zaalnr=3},
             new Stoelrij(){Rangnummer=2,Aantal_stoelen=80,  rijid=32, Zaalnr=3},
             new Stoelrij(){Rangnummer=1,Aantal_stoelen=40,  rijid=41, Zaalnr=4},
