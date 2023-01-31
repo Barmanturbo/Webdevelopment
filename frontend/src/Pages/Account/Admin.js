@@ -7,18 +7,7 @@ import RijToevoegen from './TheaterzaalMaken.js/RijToevoegen';
 
 const Admin = () => {
     const [optionState, setOptionState] = useState(1);
-    const [addZaal, setAddZaal] = useState(0);
-
-    const [roomname, setRoomname] = useState("");
-    const [roomnumber, setRoomnumber] = useState(0);
-    const [capaciteit, setCapaciteit] = useState("");
-
-    const [elementID, setElementID] = useState(0)
-
-    const [rangnummer, setRangnummer] = useState(0);
-    const [rijZaal, setRijZaal] = useState(0);
-    const [rijCapaciteit, setRijCapaciteit] = useState(0);
-
+   
     const [success, setSuccess] = useState(false);
 
     const clearValues = () => {
@@ -33,13 +22,6 @@ const Admin = () => {
         setSuccess(false);
     }
 
-    function updateDiv() {
-
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-    }
 
 
     return (
