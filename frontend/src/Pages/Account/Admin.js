@@ -4,9 +4,21 @@ import Hero2 from '../Shared/Hero2';
 
 const ZaalToevoegen = () => {
     const [addZaal, setAddZaal] = useState(0);
-    const [roomname, setRoomname] = useState("");
 
+    const [roomname, setRoomname] = useState("");
+    const [roomnumber, setRoomnumber] = useState("");
     const [capaciteit,setCapaciteit] = useState("");
+
+    const [rangnummer, setRangnummer] = useState(0);
+    const [rijZaal, setRijZaal] = useState(0);
+    const [rijCapaciteit, setRijCapaciteit] = useState(0);
+    const handleSubmit=async()=>{
+        try{
+
+        }catch(err){
+            console.log(err);
+        }
+    }
 
     /*const handleSubmit = async () => {
         try {
@@ -46,31 +58,68 @@ const ZaalToevoegen = () => {
                     <option value="2">Ruimte toeevoegen</option>
                     <option value="3">Rij toevoegen</option>
                 </select>
-                {addZaal===0?(
-                    <Alinea titel="Kies een optie."/>
+                {addZaal!=2||addZaal!=3?(
+                    <>{/*checks for only legal values */}
+                        { addZaal=== 1?(
+                            
+                            <>{/*Zaal toevoegen */}
+                                <h3>Zaal toevoegen:</h3>
+                                <form onSubmit={handleSubmit}>
+                                    <label htmlfor="zaalnaam">Zaalnaam:</label><br />
+                                    <input type="text" id="zaalnaam" autoComplete="off" onChange={(e) => setRoomname(e.target.value)} required />
+                                    <br />
+                                    <label htmlfor="zaalnummer">Zaalnummer:</label><br/>
+                                    <input type="number" id="zaalnummer" autoComplete="off" onChange={(e)=>setRoomnumber(e.target.value)}/>
+                                    <br/>
+                                    <label htmlfor="aantalStoelen">Aantal Stoelen:</label><br />
+                                    <input type="number" id="aantalStoelen" autoComplete="off" onChange={(e) => setCapaciteit(e.target.value)} required />
+                                    <button className="btn">Zaal toevoegen</button>
+                                </form>
+                            </>
+                                
+                        ) : (
+                            <>{/*Selecteer een zaal*/}
+                                <Alinea titel="Kies een optie." />
+                            </>
+                            
+                        )}
+                    </>
                 ):(
                     <>
-                    {addZaal===1?(
-                        <>{/*Zaal toevoegen */}
-                            <form>
-                                <label htmlfor="zaalnaam">Zaalnaam:</label><br/>
-                                <input type="text" id="zaalnaam" autoComplete="off" onChange={(e)=>setRoomname(e.target.value)} required/>
-                                <br/>
-                                <label htmlfor="aantalStoelen">Aantal Stoelen:</label><br/>
-                                <input type="number" id="aantalStoelen" autoComplete="off" onChange={(e)=>setCapaciteit(e.target.value)} required/>
-
-
-                            </form>
-                        </>
-                    ):(
-                        <><Alinea/>
-                        </>
-                    )}
+                        {addZaal === 2 ? (
+                            <>{/*Ruimte toevoegen */}
+                                <h3>Ruimte toevoegen:</h3>
+                                <form onSubmit={handleSubmit}>
+                                    <label htmlfor="ruimtenaam">Ruimtenaam:</label><br />
+                                    <input type="text" id="ruimtenaam" autoComplete="off" onChange={(e) => setRoomname(e.target.value)} required />
+                                    <br />
+                                    <label htmlfor="capaciteit">Capaciteit:</label><br />
+                                    <input type="number" id="capaciteit" autoComplete="off" onChange={(e) => setCapaciteit(e.target.value)} required />
+                                    <button className="btn">Ruimte toevoegen</button>
+                                </form>
+                            </>
+                        ) : (
+                            <>{/*By default this could only be accessed when addZaal===3 */}
+                                <h3>Rij toevoegen:</h3>
+                                <form onSubmit={handleSubmit}>
+                                    <label htmlfor="rang">Rangnummer:</label><br/>
+                                    <input type="number" id="rang" autoComplete="off" onChange={(e)=>setRangnummer(e.target.value)} required/>
+                                    <br/>
+                                    <label htmlFor="zaalnummer">Zaalnummer:</label>
+                                    <input type="number" id="zaalnummer" autoComplete="off" onChange={(e)=>setRijZaal(e.target.value)} required/>
+                                    <br/>
+                                    <label htmlFor="rijcapaciteit">Aantal stoelen:</label>
+                                    <input type="number" id="rijcapaciteit" autoComplete="off" onChange={(e)=>setRijCapaciteit(e.target.value)} required/>
+                                    <button className="btn">Rij toevoegen</button>
+                                </form>
+                            </>
+                        )}
                     </>
                 )}
             </section>   
         </>
     );
 }
+
 
 export default ZaalToevoegen;
