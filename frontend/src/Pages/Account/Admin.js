@@ -2,7 +2,7 @@ import React, { useState }  from 'react';
 import Alinea from '../Shared/Alinea';
 import Hero2 from '../Shared/Hero2';
 
-const ZaalToevoegen = () => {
+const Admin = () => {
     const [addZaal, setAddZaal] = useState(0);
 
     const [roomname, setRoomname] = useState("");
@@ -178,4 +178,4 @@ const ZaalToevoegen = () => {
 }
 
 
-export default ZaalToevoegen;
+export default Admin;
