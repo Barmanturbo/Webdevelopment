@@ -12,6 +12,7 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.2">
+
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -20,6 +21,8 @@
     <PackageReference Include="MySql.Data" Version="8.0.31" />
     <PackageReference Include="MySqlConnector" Version="2.2.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.2" />
+
 
   </ItemGroup>
 

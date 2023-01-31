@@ -24,8 +24,9 @@ public class Gebruiker //: IdentityUser
     public string Username {set;get;} = string.Empty;
     // public List<Ticket>? tickets {set; get;}
 
-    [Required]
-    public Role rol {get;set;} = new Role(){roleid=1};//1=basis gebruiker, 2=Artiest,3=Donateur,4=Medewerker,5=Admin
+    //[Required]
+   //[ForeignKey("Role")]
+   //public Role rol {get;set;}// = new Role(){roleid=1};//1=basis gebruiker, 2=Artiest,3=Donateur,4=Medewerker,5=Admin
 }
 
 public class GebruikerLogin{

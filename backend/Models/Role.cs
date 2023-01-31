@@ -4,5 +4,5 @@ using System.ComponentModel.DataAnnotations;
 public class Role : IdentityRole{
     
     [Required]
-    public int roleid{get;set;}
+    public int roleid {get; set;}
 }
