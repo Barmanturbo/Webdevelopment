@@ -27,7 +27,7 @@ public class DonationController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public IActionResult Post([FromBody] string eMail, [FromBody] int Hoeveelheid, [FromBody] string Naam)
+    public IActionResult Post([FromBody] string eMail)
     {
         try{
             using (var _context = new DBContext()){
