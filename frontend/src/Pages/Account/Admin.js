@@ -104,7 +104,7 @@ const Admin = () => {
                 <select required="required" onchange={(e)=>setAddZaal(e.target.value)}>
                     <option value="0" disabled seleccted>Selecteer een zaal</option>
                     <option value="1">Zaal toevoegen</option>
-                    <option value="2">Ruimte toeevoegen</option>
+                    <option value="2">Ruimte toevoegen</option>
                     <option value="3">Rij toevoegen</option>
                 </select>
                 {addZaal!=2||addZaal!=3?(
