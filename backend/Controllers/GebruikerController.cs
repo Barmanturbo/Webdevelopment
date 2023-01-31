@@ -10,6 +10,7 @@ namespace backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize (Roles = "Admin")]
 public class GebruikerController : ControllerBase
 {
     //public static DBContext _context = new DBContext();
@@ -145,7 +146,7 @@ public class GebruikerController : ControllerBase
             }
             var gebruiker = await _context.gebruikers.FindAsync(id);
             if (gebruiker == null)
-            {
+            {   
                 return NotFound();
             }
             _context.gebruikers.Remove(gebruiker);
@@ -159,6 +160,7 @@ public class GebruikerController : ControllerBase
     {
         List<Claim> claims = new List<Claim>
         { 
+            new Claim (ClaimTypes.NameIdentifier, gebruiker.UserID.ToString()),
             new Claim (ClaimTypes.Name, gebruiker.Username),
             new Claim(ClaimTypes.Role, "Admin")
         };
@@ -171,14 +173,6 @@ public class GebruikerController : ControllerBase
             );
         var jwt = new JwtSecurityTokenHandler().WriteToken(token);
         return jwt;
-    }
-    private void PasswordHash(Gebruiker gebruiker)
-    {
-            using (var hash = new HMACSHA512())
-            {
-                //gebruiker.passwordHash = hash.Key;
-                //gebruiker.saltHash = hmac.Computehash(.....);
-            }
     }
 
     private async Task<Gebruiker> getGebruikerUsingLogin(string username)
@@ -195,6 +189,14 @@ public class GebruikerController : ControllerBase
             return gebruiker; 
         }
     }
+    [HttpGet("autorize"), Authorize]
+    public async Task<ActionResult<string?>> GetUsername()
+    {   
+        var role = User.FindFirstValue(ClaimTypes.Role);
+        var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var username = User?.Identity?.Name;
+        return Ok(new {username, role, id});
+    }
 
 
     //private bool VerifyPasswordHash(string loginPassword, Gebruiker gebruiker)
@@ -207,5 +209,14 @@ public class GebruikerController : ControllerBase
 
    //        }
    //}
+
+   private void PasswordHash(Gebruiker gebruiker)
+    {
+            using (var hash = new HMACSHA512())
+            {
+                //gebruiker.passwordHash = hash.Key;
+                //gebruiker.saltHash = hmac.Computehash(.....);
+            }
+    }
 
 }
