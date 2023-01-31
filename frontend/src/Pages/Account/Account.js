@@ -24,6 +24,11 @@ const Account = () => {
                 tekst="Wilt u een evenement toevoegen?"
                 link="/ShowToevoegen"
                 linknaam="Klik hier om een evenement toe te voegen"/>
+            
+            <Alinea titel="Admins"
+                tekst="Wilt u zalen configureren?"
+                link="/Admin"
+                linknaam="Klik hier om zalen te configureren"/>
         </>
     );
 }
