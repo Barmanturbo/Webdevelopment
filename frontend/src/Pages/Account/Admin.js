@@ -102,7 +102,7 @@ const Admin = () => {
                 <h3>Type</h3>
                 <p>Kies uit Zaal, Ruimte of Rij</p>
                 <select required="required" onchange={(e)=>setAddZaal(e.target.value)}>
-                    <option value="0" disabled seleccted>Selecteer een zaal</option>
+                    <option value="0" disabled selected>Selecteer een zaal</option>
                     <option value="1">Zaal toevoegen</option>
                     <option value="2">Ruimte toevoegen</option>
                     <option value="3">Rij toevoegen</option>
