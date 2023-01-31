@@ -7,10 +7,6 @@ import RijToevoegen from './TheaterzaalMaken.js/RijToevoegen';
 
 const Admin = () => {
     const [optionState, setOptionState] = useState(1);
-   
-    const [success, setSuccess] = useState(false);
-
-
 
     return (
         
