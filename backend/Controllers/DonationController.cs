@@ -27,7 +27,7 @@ public class DonationController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public IActionResult Post([FromBody] string eMail)
+    public IActionResult Post(Gebruiker pG)
     {
         try{
             using (var _context = new DBContext()){
@@ -35,7 +35,7 @@ public class DonationController : ControllerBase
                     return NotFound();
                 }
                 var gebruikersID = _context.gebruikers
-                    .Where(g=>g.Email==eMail)
+                    .Where(g=>g.Email==pG.Email)
                     .Select(g=>g.UserID)
                     .First();
     //Nu hebben we de UserID van degene die gedoneerd heeft.
