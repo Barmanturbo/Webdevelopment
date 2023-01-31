@@ -89,7 +89,6 @@ const Admin = () => {
                             </>
                         ) : (
                             <>
-                                {optionState === "0" ? (<p>optie status is drie</p>) : (<p>optie status is niet drie</p>)}
                             </>)}
                     </div>
                 </section>
