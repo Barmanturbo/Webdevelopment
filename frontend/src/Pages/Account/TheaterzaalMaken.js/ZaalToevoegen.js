@@ -22,7 +22,8 @@ const ZaalToevoegen = () => {
             })
             if (res.status === 200) {
                 setSuccess(true);
-                console.log("success")
+                console.log("success");
+                console.log(success);
             }
         } catch (err) {
             console.log(err);
