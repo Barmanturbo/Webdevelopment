@@ -52,8 +52,7 @@ const Admin = () => {
             <>
             <Hero2 tekst="Zalen configureren" />
             <section className="contact">
-                <h3>Type</h3>
-                <p>Kies uit Zaal, Ruimte of Rij</p>
+                <Alinea titel="Type" tekst="Kies uit zaal, Ruimte of Rij"/>
                 <select required="required" onchange={(e)=>setAddZaal(e.target.value)}>
                     <option value="0" disabled selected>Selecteer een zaal</option>
                     <option value="1">Zaal toevoegen</option>
