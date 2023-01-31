@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useState } from 'react';
 import Alinea from '../Shared/Alinea';
 import Hero2 from '../Shared/Hero2';
 import ZaalToevoegen from './TheaterzaalMaken.js/ZaalToevoegen';
@@ -6,21 +6,22 @@ import RuimteToevoegen from './TheaterzaalMaken.js/RuimteToevoegen';
 import RijToevoegen from './TheaterzaalMaken.js/RijToevoegen';
 
 const Admin = () => {
-    const [addZaal, setAddZaal] = useState("");
+    const [optionState, setOptionState] = useState(1);
+    const [addZaal, setAddZaal] = useState(0);
 
     const [roomname, setRoomname] = useState("");
     const [roomnumber, setRoomnumber] = useState(0);
-    const [capaciteit,setCapaciteit] = useState("");
-    
+    const [capaciteit, setCapaciteit] = useState("");
+
     const [elementID, setElementID] = useState(0)
 
     const [rangnummer, setRangnummer] = useState(0);
     const [rijZaal, setRijZaal] = useState(0);
     const [rijCapaciteit, setRijCapaciteit] = useState(0);
 
-    const [success, setSuccess]= useState(false);
+    const [success, setSuccess] = useState(false);
 
-    const clearValues = ()=>{
+    const clearValues = () => {
         setRoomname("");
         setAddZaal(0);
         setRoomnumber(0);
@@ -32,8 +33,8 @@ const Admin = () => {
         setSuccess(false);
     }
 
-    function updateDiv(){
-        
+    function updateDiv() {
+
     }
 
     const handleSubmit = async (e) => {
@@ -42,51 +43,57 @@ const Admin = () => {
 
 
     return (
-        <>{success?(
+        <>{success ? (
             <>
-            <Hero2 tekst="Zalen configureren"/>
-            <Alinea teksts="Zaal met succes toegevoegd."/>
-            <button className="btn" onClick={(e)=>clearValues()}>Nog een zaal toevoegen?</button>
+                <Hero2 tekst="Zalen configureren" />
+                <Alinea teksts="Zaal met succes toegevoegd." />
+                <button className="btn" onClick={(e) => clearValues()}>Nog een zaal toevoegen?</button>
             </>
-        ):(
+        ) : (
             <>
-            <Hero2 tekst="Zalen configureren" />
-            <section className="contact">
-                <Alinea titel="Type" tekst="Kies uit zaal, Ruimte of Rij"/>
-                <select required="required" onchange={(e)=>setAddZaal(e.target.value)}>
-                    <option value="0" disabled selected>Selecteer een zaal</option>
-                    <option value="1">Zaal toevoegen</option>
-                    <option value="2">Ruimte toevoegen</option>
-                    <option value="3">Rij toevoegen</option>
-                </select>
-                <div id="formcontainer">
-                {addZaal!=2||addZaal!=3?(
-                    <>{/*checks for only legal values */}
-                        { addZaal=== 1?(
+                <Hero2 tekst="Zalen configureren" />
+                <section className="contact">
+                    <Alinea titel="Type" tekst="Kies uit zaal, Ruimte of Rij" />
+
+
+                    <select id="selector" required="required" onChange={e => setOptionState(e.target.value)}>
+                        <option value="0" disabled selected>Selecteer een zaal</option>
+                        <option value="1">Zaal toevoegen</option>
+                        <option value="2">Ruimte toevoegen</option>
+                        <option value="3">Rij toevoegen</option>
+                    </select>
+
+
+                    <p>Option State: {optionState}</p>
+
+                    <div id="formcontainer">
+                        {optionState === "1" ? (
                             <>
-                            <ZaalToevoegen/>
+                                <ZaalToevoegen />
                             </>
                         ) : (
-                            <>{/*Selecteer een zaal*/}
-                                <Alinea titel="Kies een optie." />
-                            </>
-                        )}
-                    </>
-                ):(
-                    <>
-                        {addZaal === 2 ? (
                             <>
-                            <RuimteToevoegen/>
+                                {optionState === "0" ? (<Alinea tekst="kies een optie" />) : (<></>)}
+                            </>)}
+                        {optionState === "2" ? (
+                            <>
+                                <RuimteToevoegen />
                             </>
                         ) : (
-                            <>{/*By default this could only be accessed when addZaal===3 */}
-                            <RijToevoegen/>
+                            <>
+                                {optionState === "0" ? (<p>optie status is 0</p>) : (<></>)}
+                            </>)}
+                        {optionState === "3" ? (
+                            <>
+                                <RijToevoegen />
                             </>
-                        )}
-                    </>
-                )}</div>
-            </section>
-            </>)}   
+                        ) : (
+                            <>
+                                {optionState === "0" ? (<p>optie status is drie</p>) : (<p>optie status is niet drie</p>)}
+                            </>)}
+                    </div>
+                </section>
+            </>)}
         </>
     );
 }
