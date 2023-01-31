@@ -10,28 +10,10 @@ const Admin = () => {
    
     const [success, setSuccess] = useState(false);
 
-    const clearValues = () => {
-        setRoomname("");
-        setAddZaal(0);
-        setRoomnumber(0);
-        setCapaciteit("");
-        setElementID(0);
-        setRangnummer(0);
-        setRijZaal(0);
-        setRijCapaciteit(0);
-        setSuccess(false);
-    }
-
 
 
     return (
-        <>{success ? (
-            <>
-                <Hero2 tekst="Zalen configureren" />
-                <Alinea teksts="Zaal met succes toegevoegd." />
-                <button className="btn" onClick={(e) => clearValues()}>Nog een zaal toevoegen?</button>
-            </>
-        ) : (
+        
             <>
                 <Hero2 tekst="Zalen configureren" />
                 <section className="contact">
@@ -74,7 +56,7 @@ const Admin = () => {
                             </>)}
                     </div>
                 </section>
-            </>)}
+            
         </>
     );
 }
