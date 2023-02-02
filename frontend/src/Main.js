@@ -14,6 +14,7 @@ import Aanmaken from "./Pages/Account/Aanmaken";
 import Huren from "./Pages/Winkelmand/Huren";
 import Doneren from "./Pages/Account/Doneren";
 import ShowToevoegen from "./Pages/Show/ShowToevoegen";
+import Admin from "./Pages/Account/Admin";
 
 class Main extends React.Component {
   render() {
@@ -33,6 +34,7 @@ class Main extends React.Component {
             <Route path="/ShowToevoegen" element={<ShowToevoegen />} />
             <Route path="/Huren" element={<Huren />} />
             <Route path="/Doneren" element={<Doneren />} />
+            <Route path="/Admin" element={<Admin/>}/>
             <Route path="*" element={<VierNulVier />} />
           </Routes>
       </BrowserRouter>

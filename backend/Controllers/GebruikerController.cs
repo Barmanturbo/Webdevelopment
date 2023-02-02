@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -9,6 +10,7 @@ namespace backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+//[Authorize (Roles = "Admin")]
 public class GebruikerController : ControllerBase
 {
     //public static DBContext _context = new DBContext();
@@ -19,7 +21,7 @@ public class GebruikerController : ControllerBase
     }
 
     // GET: api/Gebruiker
-    [HttpGet]
+    [HttpGet, Authorize(Roles = "Admin")]
     public async Task<ActionResult<IEnumerable<Gebruiker>>> getGebruiker()
     {
         using (var _context = new DBContext())
@@ -91,12 +93,14 @@ public class GebruikerController : ControllerBase
             {
                 //if (!VerifyPasswordHash(...)){
                 //return BadRequest("Wrong password");}
-                //var token = CreateToken(gebruiker);
-                return Ok(getUser);
+                var token = CreateToken(gebruiker ,"admin"); 
+                Response.Cookies.Append("jwt", token, new CookieOptions{HttpOnly = true});
+                return Ok();
             }
             else
             {
                 return NotFound();
+                
             }
             
         }
@@ -132,7 +136,7 @@ public class GebruikerController : ControllerBase
     }
 
     // DELETE: api/Gebruiker/5
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}"), Authorize(Roles = "admin")] //AllowAnonimous //Authenicate the web token. 
     public async Task<ActionResult<Show>> DeleteGebruiker(int id)
     {
         using (var _context = new DBContext())
@@ -143,7 +147,7 @@ public class GebruikerController : ControllerBase
             }
             var gebruiker = await _context.gebruikers.FindAsync(id);
             if (gebruiker == null)
-            {
+            {   
                 return NotFound();
             }
             _context.gebruikers.Remove(gebruiker);
@@ -153,14 +157,15 @@ public class GebruikerController : ControllerBase
         }
     }
 
-    private string CreateToken(Gebruiker gebruiker)
+    private string CreateToken(Gebruiker gebruiker, string role)
     {
         List<Claim> claims = new List<Claim>
         { 
-            new Claim (ClaimTypes.Name, gebruiker.Username)
+            new Claim (ClaimTypes.NameIdentifier, gebruiker.UserID.ToString()),
+            new Claim (ClaimTypes.Name, gebruiker.Username),
+            new Claim(ClaimTypes.Role, "Admin")
         };
-
-        var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_config.GetSection("AppSettings: Token").Value));
+        var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
         var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
         var token = new JwtSecurityToken(
             claims: claims,
@@ -169,14 +174,6 @@ public class GebruikerController : ControllerBase
             );
         var jwt = new JwtSecurityTokenHandler().WriteToken(token);
         return jwt;
-    }
-    private void PasswordHash(Gebruiker gebruiker)
-    {
-            using (var hash = new HMACSHA512())
-            {
-                //gebruiker.passwordHash = hash.Key;
-                //gebruiker.saltHash = hmac.Computehash(.....);
-            }
     }
 
     private async Task<Gebruiker> getGebruikerUsingLogin(string username)
@@ -193,6 +190,26 @@ public class GebruikerController : ControllerBase
             return gebruiker; 
         }
     }
+    [HttpPost("logout")]
+    public async Task<ActionResult<string?>> Logout()
+    {   
+        Response.Cookies.Delete("jwt");
+        return Ok();
+    }
+    
+    [HttpGet("autorize")]
+    public async Task<ActionResult<string?>> GetToken()
+    {   
+        var jwt = Request.Cookies["jwt"];
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
+        var token = tokenHandler.ValidateToken(jwt, new TokenValidationParameters{IssuerSigningKey = key}, out SecurityToken validatedToken);
+
+        var role = token.FindFirstValue(ClaimTypes.Role);
+        var id = token.FindFirstValue(ClaimTypes.NameIdentifier);
+        var username = token?.Identity?.Name;
+        return Ok(new {username, role, id});
+    }
 
 
     //private bool VerifyPasswordHash(string loginPassword, Gebruiker gebruiker)
@@ -205,5 +222,14 @@ public class GebruikerController : ControllerBase
 
    //        }
    //}
+
+   private void PasswordHash(Gebruiker gebruiker)
+    {
+            using (var hash = new HMACSHA512())
+            {
+                //gebruiker.passwordHash = hash.Key;
+                //gebruiker.saltHash = hmac.Computehash(.....);
+            }
+    }
 
 }

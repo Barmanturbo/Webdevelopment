@@ -2,10 +2,10 @@ import React from "react";
 import IkDoneer from "./ikDoneer";
 import Hero2 from "../Shared/Hero2";
 import Alinea from "../Shared/Alinea";
-import {useRef} from 'react';
+import {useState} from 'react';
 
-const Account = () => {
-    const [donatie, setDonatie]=useRef();
+const Doneren = () => {
+    const [donatie, setDonatie]=useState();
 
     const loggedIn = false;
 
@@ -70,4 +70,4 @@ const Account = () => {
     );
 }
 
-export default Account;
+export default Doneren;
